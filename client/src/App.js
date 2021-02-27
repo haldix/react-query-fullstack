@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+import { getData, postData, deleteData } from './api';
 
 function App() {
-  const url = '/posts';
   const [posts, setPosts] = useState([]);
   const [addPost, setAddPost] = useState({ id: '', title: '' });
 
@@ -11,35 +11,23 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('/posts', {
-      method: 'POST',
-      body: JSON.stringify(addPost),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const data = await res.json();
+    const data = await postData(addPost);
     setPosts(data);
     setAddPost({ id: '', title: '' });
   };
 
   const handleDelete = async (e) => {
     const { id } = e.target;
-    const res = await fetch(`${url}/${id}`, {
-      method: 'DELETE',
-    });
-    const posts = await res.json();
+    const posts = await deleteData(id);
     setPosts(posts);
   };
 
   useEffect(() => {
-    async function getData() {
-      const res = await fetch(url);
-      const data = await res.json();
-      setPosts(data);
+    async function callData() {
+      await getData();
     }
-    getData();
-  }, [url]);
+    callData();
+  }, []);
 
   return (
     <div className='App'>
