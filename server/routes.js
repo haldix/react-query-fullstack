@@ -4,44 +4,45 @@ const { getPosts, writePost } = require('./utils');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  getPosts((err, data) => {
-    if (err) throw err;
+router.get('/', async (req, res) => {
+  try {
+    let data = await getPosts();
     let posts = JSON.parse(data);
-    setTimeout(() => res.json(posts), 1000);
-  });
+    setTimeout(() => res.json(posts), 2000);
+    // res.json(posts);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   let newPost = req.body;
-
-  getPosts((err, data) => {
-    if (err) throw err;
+  try {
+    let data = await getPosts();
     let oldPosts = JSON.parse(data);
     let newPosts = [...oldPosts, newPost];
 
-    writePost(newPosts, (err) => {
-      if (err) throw err;
-      res.json(newPosts);
-      console.log('Data written to file');
-    });
-  });
+    let postData = await writePost(newPosts);
+    let posts = JSON.parse(postData);
+    res.json(posts);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const id = req.params.id;
-  console.log(id);
-
-  getPosts((err, data) => {
-    if (err) throw err;
+  try {
+    let data = await getPosts();
     let oldPosts = JSON.parse(data);
     let newPosts = oldPosts.filter((post) => post.id != id);
 
-    writePost(newPosts, (err) => {
-      if (err) throw err;
-      res.json(newPosts);
-    });
-  });
+    let postData = await writePost(newPosts);
+    let posts = JSON.parse(postData);
+    res.json(posts);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;
