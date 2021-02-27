@@ -45,23 +45,26 @@ function App() {
     <div className='App'>
       <h1>App Frontend</h1>
       <form id='form' onSubmit={handleSubmit}>
-        <label htmlFor='id'>ID</label>
-        <input
-          name='id'
-          id='id'
-          type='text'
-          value={addPost.id}
-          onChange={handleChange}
-        />
-        <label htmlFor='title'>Title</label>
-        <input
-          id='title'
-          type='text'
-          name='title'
-          value={addPost.title}
-          onChange={handleChange}
-        />
-        <input type='submit' value='Submit' />
+        <fieldset>
+          <legend>Input to backend</legend>
+          <label htmlFor='id'>ID</label>
+          <input
+            name='id'
+            id='id'
+            type='text'
+            value={addPost.id}
+            onChange={handleChange}
+          />
+          <label htmlFor='title'>Title</label>
+          <input
+            id='title'
+            type='text'
+            name='title'
+            value={addPost.title}
+            onChange={handleChange}
+          />
+          <input type='submit' value='Submit' />
+        </fieldset>
       </form>
       <h2>Data from backend</h2>
       <ul>
