@@ -63,6 +63,7 @@ function App() {
         />
         <input type='submit' value='Submit' />
       </form>
+      <h2>Data from backend</h2>
       <ul>
         {posts.map((post) => (
           <li key={post.id}>

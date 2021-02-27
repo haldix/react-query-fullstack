@@ -1,0 +1,39 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 3rem;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+form {
+  max-width: 400px;
+  margin: 2rem auto;
+  border: 1px solid gray;
+  padding: 2rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+ul {
+  list-style: none;
+  max-width: 400px;
+  margin: 2rem auto;
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+  button {
+    margin-left: 0.4rem;
+  }
+}
