@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { postData } from './api';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 const Form = () => {
   const [addPost, setAddPost] = useState({ id: '', title: '' });
 
   const handleChange = (e) => {
-    setAddPost({ ...addPost, [e.target.name]: e.target.value });
+    setAddPost((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const mutation = useMutation((formData) => {
-    return postData(formData);
-  });
+  const history = useHistory();
+
+  const mutation = useMutation(
+    (formData) => {
+      return postData(formData);
+    },
+    {
+      onSuccess: () => {
+        history.push('/');
+      },
+    }
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    mutation.mutate(addPost);
+    await mutation.mutateAsync(addPost);
     setAddPost({ id: '', title: '' });
   };
   return (

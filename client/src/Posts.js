@@ -1,17 +1,27 @@
 import React from 'react';
-import { getData } from './api';
+import { getData, deleteData } from './api';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 const Posts = () => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   // Queries
   const { data, error, isLoading, isError } = useQuery('posts', getData);
 
+  const mutation = useMutation(
+    (id) => {
+      return deleteData(id);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('posts');
+      },
+    }
+  );
+
   const handleDelete = async (e) => {
     const { id } = e.target;
-    //const posts = await deleteData(id);
-    // setPosts(posts);
+    await mutation.mutateAsync(id);
   };
 
   if (isLoading) {

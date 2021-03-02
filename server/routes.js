@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 
     let postData = await writePost(newPosts);
     let posts = JSON.parse(postData);
-    res.json(posts);
+    res.status(201).json(posts);
   } catch (err) {
     console.log(err);
   }

@@ -1,7 +1,6 @@
 const url = '/posts';
 
 async function getData() {
-  console.log('GETDATA');
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error('Unable to fetch data');
@@ -34,4 +33,4 @@ async function deleteData(id) {
   return res.json();
 }
 
-module.exports = { getData, postData, deleteData };
+export { getData, postData, deleteData };
